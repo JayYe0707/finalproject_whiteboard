@@ -1,15 +1,17 @@
+package finalproject_whiteboard;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 
 public class Whiteboard extends JFrame {
-    private final static String TITLE = "Nice Whiteboard";
+    private final static String THE_TITLE = "Nice Whiteboard";
     private Canvas canvas;
     private JPanel controls;
 
     public Whiteboard() {
-        this.setTitle(TITLE);
+        this.setTitle(THE_TITLE);
         setLayout(new BorderLayout());
         canvas = new Canvas(this);
         add(canvas, BorderLayout.CENTER);
