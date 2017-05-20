@@ -30,6 +30,16 @@ public class Canvas extends JPanel {
                 selectShape(e.getPoint());
             }
         });
+
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (selectedShape != null) {
+                    // System.out.println("Moving: x: " + e.getX() + ", y: " + e.getY());
+                    selectedShape.move(e.getX(), e.getY());
+                }
+            }
+        });
     }
 
     private void selectShape(Point point) {
