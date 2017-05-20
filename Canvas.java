@@ -47,6 +47,10 @@ public class Canvas extends JPanel {
         repaint();
     }
 
+    public DShape getSelectedShape() {
+        return selectedShape;
+    }
+
     public void addShape(DShapeModel model) {
         // System.out.println(model);
         DShape shape = null;

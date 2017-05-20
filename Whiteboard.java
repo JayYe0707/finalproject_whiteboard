@@ -32,8 +32,11 @@ public class Whiteboard extends JFrame {
         JButton btnSetColor = new JButton("Pick Color");
         btnSetColor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Color color = JColorChooser.showDialog(null, "Pick a Color", Color.gray);
-                System.out.println(color);
+                DShape s = canvas.getSelectedShape();
+                if (s != null) {
+                    Color color = JColorChooser.showDialog(null, "Pick a Color", s.getColor());
+                    System.out.println(color);
+                }
             }
         });
 
