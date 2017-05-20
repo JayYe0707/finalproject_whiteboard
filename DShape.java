@@ -6,6 +6,9 @@ public abstract class DShape implements ModelListener {
     
     protected DShapeModel model;
     protected Canvas canvas;
+    protected int dx = 0;
+    protected int dy = 0;
+    protected boolean isDragging = false;
 
     public DShape(DShapeModel model, Canvas canvas) {
         this.model = model;
@@ -25,9 +28,19 @@ public abstract class DShape implements ModelListener {
         model.setColor(c);
     }
 
+    public void endDragging() {
+        isDragging = false;
+    }
+
     public void move(int x, int y) {
         Rectangle bounds = model.getBounds();
-        model.setBounds(x, y, bounds.width, bounds.height);
+        if (!isDragging) {
+            dx = x - bounds.x;
+            dy = y - bounds.y;
+            isDragging = true;
+        }
+        System.out.println("dx: " + dx + " dy: " +dy);
+        model.setBounds((x - dx), (y - dy), bounds.width, bounds.height);
     }
 
     public boolean containsPoint(Point point) {
