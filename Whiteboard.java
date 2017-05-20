@@ -30,6 +30,13 @@ public class Whiteboard extends JFrame {
 
     private Box createSettings() {
         JButton btnSetColor = new JButton("Pick Color");
+        btnSetColor.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Color color = JColorChooser.showDialog(null, "Pick a Color", Color.gray);
+                System.out.println(color);
+            }
+        });
+
         Box box = Box.createHorizontalBox();
 
         box.add(btnSetColor);
