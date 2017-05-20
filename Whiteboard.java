@@ -35,7 +35,8 @@ public class Whiteboard extends JFrame {
                 DShape s = canvas.getSelectedShape();
                 if (s != null) {
                     Color color = JColorChooser.showDialog(null, "Pick a Color", s.getColor());
-                    System.out.println(color);
+                    System.out.println("Color Selected: " + color);
+                    s.setColor(color);
                 }
             }
         });

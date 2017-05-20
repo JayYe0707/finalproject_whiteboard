@@ -21,6 +21,10 @@ public abstract class DShape implements ModelListener {
         return model.getColor();
     }
 
+    public void setColor(Color c) {
+        model.setColor(c);
+    }
+
     public boolean containsPoint(Point point) {
         Rectangle bounds = getBounds();
         
@@ -32,6 +36,7 @@ public abstract class DShape implements ModelListener {
     }
 
     public void modelChanged(DShapeModel model) {
+        canvas.repaint();
         System.out.println("DShape LALAALL");
     }
 
