@@ -13,18 +13,28 @@ public class Whiteboard extends JFrame {
     public Whiteboard() {
         this.setTitle(THE_TITLE);
         setLayout(new BorderLayout());
-        canvas = new Canvas(this);
+        canvas = new Canvas();
         add(canvas, BorderLayout.CENTER);
 
         controls = new JPanel();
         controls.setLayout(new GridLayout(6, 1));
         controls.add(createButtons());
+        controls.add(createSettings());
 
         add(controls, BorderLayout.WEST);
 
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+    }
+
+    private Box createSettings() {
+        JButton btnSetColor = new JButton("Pick Color");
+        Box box = Box.createHorizontalBox();
+
+        box.add(btnSetColor);
+
+        return box;
     }
 
     private Box createButtons() {

@@ -1,3 +1,5 @@
+package finalproject_whiteboard;
+
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -16,7 +18,7 @@ public class Canvas extends JPanel {
     private ArrayList<DShape> shapes;
     private DShape selectedShape;
 
-    public Canvas(Whiteboard board) {
+    public Canvas() {
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         setPreferredSize(getMinimumSize());
         setBackground(Color.white);
@@ -67,6 +69,7 @@ public class Canvas extends JPanel {
         }
 
         shapes.add(shape);
+        selectedShape = shape;
         System.out.println(shapes.toString());
         repaint();
     }

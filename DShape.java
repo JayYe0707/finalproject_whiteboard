@@ -1,6 +1,8 @@
+package finalproject_whiteboard;
+
 import java.awt.*;
 
-public class DShape {
+public abstract class DShape implements ModelListener {
     
     protected DShapeModel model;
     protected Canvas canvas;
@@ -8,6 +10,7 @@ public class DShape {
     public DShape(DShapeModel model, Canvas canvas) {
         this.model = model;
         this.canvas = canvas;
+        model.addListener(this);
     }
 
     public Rectangle getBounds() {
@@ -22,6 +25,10 @@ public class DShape {
         }
         
         return false;
+    }
+
+    public void modelChanged(DShapeModel model) {
+        System.out.println("DShape LALAALL");
     }
 
     public void draw(Graphics g, Boolean isSelected) {
