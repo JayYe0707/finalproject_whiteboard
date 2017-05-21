@@ -2,7 +2,7 @@ package finalproject_whiteboard;
 
 import java.awt.*;
 
-public class DShape {
+public abstract class DShape implements ModelListener {
     
     protected DShapeModel model;
     protected Canvas canvas;
@@ -10,10 +10,19 @@ public class DShape {
     public DShape(DShapeModel model, Canvas canvas) {
         this.model = model;
         this.canvas = canvas;
+        model.addListener(this);
     }
 
     public Rectangle getBounds() {
         return model.getBounds();
+    }
+
+    public Color getColor() {
+        return model.getColor();
+    }
+
+    public void setColor(Color c) {
+        model.setColor(c);
     }
 
     public boolean containsPoint(Point point) {
@@ -24,6 +33,11 @@ public class DShape {
         }
         
         return false;
+    }
+
+    public void modelChanged(DShapeModel model) {
+        canvas.repaint();
+        System.out.println("DShape LALAALL");
     }
 
     public void draw(Graphics g, Boolean isSelected) {

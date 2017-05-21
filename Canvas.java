@@ -18,7 +18,7 @@ public class Canvas extends JPanel {
     private ArrayList<DShape> shapes;
     private DShape selectedShape;
 
-    public Canvas(Whiteboard board) {
+    public Canvas() {
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         setPreferredSize(getMinimumSize());
         setBackground(Color.white);
@@ -45,6 +45,10 @@ public class Canvas extends JPanel {
         }
         System.out.println(selectedShape);
         repaint();
+    }
+
+    public DShape getSelectedShape() {
+        return selectedShape;
     }
 
     public void addShape(DShapeModel model) {
@@ -80,6 +84,7 @@ public class Canvas extends JPanel {
         }
 
         shapes.add(shape);
+        selectedShape = shape;
         System.out.println(shapes.toString());
         repaint();
     }
