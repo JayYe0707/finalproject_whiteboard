@@ -1,3 +1,5 @@
+package finalproject_whiteboard;
+
 import java.awt.*;
 
 public class DShape {

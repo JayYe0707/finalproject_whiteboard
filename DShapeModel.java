@@ -1,10 +1,12 @@
+package finalproject_whiteboard;
+
 import java.util.*;
 import java.awt.*;
 
 public abstract class DShapeModel {
     
-    protected Rectangle bounds;
-    protected Color color;
+    protected Rectangle bounds;// the Rectanle bound for each shape
+    protected Color color; //shape
 
     public DShapeModel() {
         this(0, 0);
@@ -26,6 +28,10 @@ public abstract class DShapeModel {
     public void setBounds(int x, int y, int width, int height) {
         bounds = new Rectangle(x, y, width, height);
     }
+    
+//    public void setLineBounds(int x,int y ){
+//        
+//    }
 
     public void setColor(Color color) {
         this.color = color;
