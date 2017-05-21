@@ -33,7 +33,7 @@ public class Canvas extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e) {
                 if(selectedShape != null) {
-                    selectedShape.endDragging();
+                    selectedShape.onMouseReleased();
                 }
             }
         });
@@ -42,7 +42,7 @@ public class Canvas extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (selectedShape != null) {
-                    selectedShape.move(e.getX(), e.getY());
+                    selectedShape.onMouseDragged(e.getX(), e.getY());
                 }
             }
         });
@@ -53,6 +53,7 @@ public class Canvas extends JPanel {
         for (DShape shape : shapes) {
             if (shape.containsPoint(point)) {
                 selectedShape = shape;
+                selectedShape.onMousePressed(point);
                 clickOnShape = true;
             }
         }
