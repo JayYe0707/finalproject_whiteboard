@@ -88,6 +88,17 @@ public class Canvas extends JPanel {
         if(model instanceof DRectModel) {
             shape = new DRect(model, this);
         }
+        else if(model instanceof DOvalModel){
+            shape = new DOval(model,this);
+        }
+     
+        else if (model instanceof DLineModel){
+            shape = new DLine(model, this);
+        }
+        else if (model instanceof DTextModel){
+             String inputT = DText.getText();
+            shape = new DText(model, this,inputT);
+        }
 
         shapes.add(shape);
         selectedShape = shape;

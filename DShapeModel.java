@@ -31,6 +31,10 @@ public abstract class DShapeModel {
         bounds = new Rectangle(x, y, width, height);
         notifyChange();
     }
+    
+//    public void setLineBounds(int x,int y ){
+//        
+//    }
 
     public void setColor(Color color) {
         this.color = color;
