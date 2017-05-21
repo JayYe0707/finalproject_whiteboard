@@ -43,9 +43,20 @@ public class Whiteboard extends JFrame {
             }
         });
 
+        JButton btnDelete = new JButton("Delete");
+        btnDelete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                DShape s = canvas.getSelectedShape();
+                if (s != null) {
+                    canvas.deleteShape(s);
+                }
+            }
+        });
+
         Box box = Box.createHorizontalBox();
 
         box.add(btnSetColor);
+        box.add(btnDelete);
 
         return box;
     }
@@ -63,7 +74,7 @@ public class Whiteboard extends JFrame {
         JButton btnOval = new JButton("Oval");
         btnOval.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                canvas.addShape(new DOvalModel()); 
+                canvas.addShape(new DOvalModel());
             }
         });
         
@@ -75,7 +86,7 @@ public class Whiteboard extends JFrame {
             }
         });
         
-        //create text button and listener 
+        //create text button and listener
         JButton btnText = new JButton("Text");
         btnText.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){

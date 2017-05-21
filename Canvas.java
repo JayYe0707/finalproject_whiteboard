@@ -68,6 +68,11 @@ public class Canvas extends JPanel {
         return selectedShape;
     }
 
+    public void deleteShape(DShape shape) {
+        shapes.remove(shape);
+        repaint();
+    }
+
     public void addShape(DShapeModel model) {
         // System.out.println(model);
         DShape shape = null;
