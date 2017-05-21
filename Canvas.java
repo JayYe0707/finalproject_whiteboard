@@ -50,6 +50,21 @@ public class Canvas extends JPanel {
     public DShape getSelectedShape() {
         return selectedShape;
     }
+    
+    public ArrayList<DShape> getShapes()
+    {
+    	return shapes;
+    }
+    
+    public ArrayList<DShapeModel> getShapeModels()
+    {
+    	ArrayList<DShapeModel> list = new ArrayList<DShapeModel>();
+    	for (DShape shape : shapes)
+    	{
+    		list.add(shape.getModel());
+    	}
+    	return list;
+    }
 
     public void addShape(DShapeModel model) {
         // System.out.println(model);
@@ -87,6 +102,13 @@ public class Canvas extends JPanel {
         selectedShape = shape;
         System.out.println(shapes.toString());
         repaint();
+    }
+    
+    public void clear()
+    {
+    	shapes.clear();
+    	selectedShape = null;
+    	repaint();
     }
 
     @Override
