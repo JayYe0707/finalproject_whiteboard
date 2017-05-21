@@ -42,7 +42,6 @@ public class Canvas extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (selectedShape != null) {
-                    // System.out.println("Moving: x: " + e.getX() + ", y: " + e.getY());
                     selectedShape.move(e.getX(), e.getY());
                 }
             }

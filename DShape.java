@@ -42,7 +42,6 @@ public abstract class DShape implements ModelListener {
             dy = y - bounds.y;
             isDragging = true;
         }
-        System.out.println("dx: " + dx + " dy: " +dy);
         model.setBounds((x - dx), (y - dy), bounds.width, bounds.height);
     }
 
@@ -84,17 +83,13 @@ public abstract class DShape implements ModelListener {
 
     public void draw(Graphics g, Boolean isSelected) {
         if (isSelected) {
-            Rectangle bounds = model.getBounds();
             g.setColor(Color.black);
-            // g.drawString("X", bounds.x, bounds.y);
             ArrayList<Point> knobs = getKnobs();
 
             for (Point p : knobs) {
                 int x = (int) p.getX() - (KNOB_SIZE - 1) / 2;
                 int y = (int) p.getY() - (KNOB_SIZE - 1) / 2;
                 g.fillRect(x, y, KNOB_SIZE, KNOB_SIZE);
-
-                // System.out.println(p);
             }
         }
     }
