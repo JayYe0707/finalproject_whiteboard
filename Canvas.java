@@ -17,8 +17,10 @@ public class Canvas extends JPanel {
 
     private ArrayList<DShape> shapes;
     private DShape selectedShape;
+    private Whiteboard board;
 
-    public Canvas() {
+    public Canvas(Whiteboard board) {
+    	this.board = board;
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         setPreferredSize(getMinimumSize());
         setBackground(Color.white);
@@ -60,6 +62,7 @@ public class Canvas extends JPanel {
         if (!clickOnShape) {
             selectedShape = null;
         }
+        board.updateTableSelection(selectedShape);
         System.out.println(selectedShape);
         repaint();
     }
@@ -86,6 +89,7 @@ public class Canvas extends JPanel {
     public void deleteShape(DShape shape) {
         shapes.remove(shape);
         repaint();
+        board.removeShapeFromTable(shape);
     }
 
     public void toFront(DShape shape) {
@@ -126,6 +130,7 @@ public class Canvas extends JPanel {
 
         shapes.add(shape);
         selectedShape = shape;
+        board.addShapeToTable(shape);
         System.out.println(shapes.toString());
         repaint();
     }
@@ -134,6 +139,7 @@ public class Canvas extends JPanel {
     {
     	shapes.clear();
     	selectedShape = null;
+        board.clearTable();
     	repaint();
     }
 

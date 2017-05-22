@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.AbstractTableModel;
 
 import javafx.stage.FileChooser;
 
@@ -28,6 +29,8 @@ public class Whiteboard extends JFrame {
     private JTextField inputText;
     private String textFromCanvas;
     private JFileChooser fileChooser;
+    private JTable table;
+    private TableModel tableModel;
     
 
     public Whiteboard() {
@@ -36,13 +39,14 @@ public class Whiteboard extends JFrame {
         fileChooser = new JFileChooser();
         
         setLayout(new BorderLayout());
-        canvas = new Canvas();
+        canvas = new Canvas(this);
         add(canvas, BorderLayout.CENTER);
 
         controls = new JPanel();
         controls.setLayout(new GridLayout(6, 1));
         controls.add(createButtons());
         controls.add(createSettings());
+        controls.add(createTable());
 
         add(controls, BorderLayout.WEST);
 
@@ -50,6 +54,137 @@ public class Whiteboard extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
+    
+    private JScrollPane createTable(){
+    	tableModel = new TableModel();
+    	table = new JTable(tableModel);
+    	JScrollPane scrollpane = new JScrollPane(table);	
+    	return scrollpane;
+    }
+    
+    private class TableModel extends AbstractTableModel implements ModelListener
+    {
+    	private ArrayList<String> columnNames;
+    	private ArrayList<DShapeModel> models;
+    	private ArrayList<ArrayList> data;
+    	
+    	public TableModel()
+    	{
+    		columnNames = new ArrayList<String>();
+    		columnNames.add("X");
+    		columnNames.add("Y");
+    		columnNames.add("Width");
+    		columnNames.add("Height");
+    		
+    		models = new ArrayList<DShapeModel>();
+    		data = new ArrayList<ArrayList>();
+    	}
+
+		@Override
+		public int getColumnCount() {
+			return 4;
+		}
+
+		@Override
+		public int getRowCount() {
+			return models.size();
+		}
+
+		@Override
+		public Object getValueAt(int row, int column) {
+			Rectangle bounds = models.get(row).getBounds();
+	        switch(column)
+	        {
+	            case 0: return bounds.x;
+	            case 1: return bounds.y;
+	            case 2: return bounds.width;
+	            case 3: return bounds.height;
+	            default: return null;
+	        }
+		}
+		
+
+		@Override
+		public void modelChanged(DShapeModel model) {
+			int index = models.indexOf(model);
+	        fireTableRowsUpdated(index, index);
+		}
+		
+		public String getColumnName(int col){
+	        return columnNames.get(col);
+	    }
+    	
+		public void addModel(DShapeModel model)
+		{
+			models.add(0, model);
+	        model.addListener(this);
+	        fireTableDataChanged();
+		}
+		
+		public void removeModel(DShapeModel model)
+		{
+			model.removeListener(this);
+			models.remove(model);
+			fireTableDataChanged();
+		}
+		
+		public void moveToFront(DShapeModel model)
+	    {
+	        models.remove(model);
+	        models.add(0,model);
+	        fireTableDataChanged();
+	    }
+		
+		public void moveToBack(DShapeModel model)
+	    {
+	        models.remove(model);
+	        models.add(model);
+	        fireTableDataChanged();
+	    }
+		
+		public int getRowPerModel(DShapeModel model)
+	    {
+	        return models.indexOf(model);
+	    }
+		
+		public void clear()
+	    {
+	        models.clear();
+	        fireTableDataChanged();
+	    }
+    }
+    
+    public void addShapeToTable(DShape shape)
+    {
+        tableModel.addModel(shape.getModel());
+        updateTableSelection(shape);
+    } 
+    
+    public void removeShapeFromTable(DShape shape){
+        tableModel.removeModel(shape.getModel());
+        updateTableSelection(null);
+    } 
+    
+    public void clearTable(){
+        tableModel.clear();
+    }  
+    
+    public void tableToBack(DShape shape){
+        tableModel.moveToBack(shape.getModel());
+        updateTableSelection(shape);
+    } 
+    
+    public void tableToFront(DShape shape){
+        tableModel.moveToFront(shape.getModel());
+        updateTableSelection(shape);
+    }   
+    
+    public void updateTableSelection(DShape selected){
+        table.clearSelection();
+        int index = tableModel.getRowPerModel(selected.getModel());
+        table.setRowSelectionInterval(index, index);
+
+    } 
 
     private Box createSettings() {
         JButton btnSetColor = new JButton("Pick Color");
