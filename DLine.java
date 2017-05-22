@@ -15,4 +15,9 @@ public class DLine extends DShape {
         // System.out.println("Draw DRect: " + bounds.x + bounds.y + bounds.width + bounds.height);
         super.draw(g, isSelected);
     }
+    
+    public DLineModel getModel()
+    {
+    	return (DLineModel) model;
+    }
 }

@@ -31,4 +31,9 @@ public class DText extends DShape{
         public static String getText(){
          return DText.text;
     }
+        
+    public DTextModel getModel()
+    {
+    	return (DTextModel) model;
+    }
 }

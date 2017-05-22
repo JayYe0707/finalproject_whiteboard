@@ -100,6 +100,7 @@ public class Canvas extends JPanel {
             }
             newShapes.add(shape);
         }
+        board.tableToFront(shape);
         shapes = newShapes;
         repaint();
     }
@@ -112,27 +113,29 @@ public class Canvas extends JPanel {
                 newShapes.add(s);
             }
         }
+        board.tableToBack(shape);
         shapes = newShapes;
         repaint();
     }
 
-    public void addShape(DShapeModel model) {
+    public void addShape(DShapeModel model, boolean random) {
         // System.out.println(model);
         DShape shape = null;
+        if (random)
+        {
+        	// set bounds
+        	Random rand = new Random();
+        	int w = rand.nextInt(100) + SHAPE_W;
+        	rand = new Random();
+        	int h = rand.nextInt(100) + SHAPE_H;
+        	rand = new Random();
 
-        // set bounds
-        Random rand = new Random();
-        int w = rand.nextInt(100) + SHAPE_W;
-        rand = new Random();
-        int h = rand.nextInt(100) + SHAPE_H;
-        rand = new Random();
+        	int x = rand.nextInt(WIDTH - w) + SHAPE_X;
+        	rand = new Random();
+        	int y = rand.nextInt(HEIGHT - h) + SHAPE_Y;
 
-        int x = rand.nextInt(WIDTH - w) + SHAPE_X;
-        rand = new Random();
-        int y = rand.nextInt(HEIGHT - h) + SHAPE_Y;
-
-        model.setBounds(x, y, w, h);
-
+        	model.setBounds(x, y, w, h);
+        }
         if(model instanceof DRectModel) {
             shape = new DRect(model, this);
         }

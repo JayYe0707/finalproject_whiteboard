@@ -245,14 +245,14 @@ public class Whiteboard extends JFrame {
         //add listenner for rect
         btnRect.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
-               canvas.addShape(new DRectModel());
+               canvas.addShape(new DRectModel(), true);
            }
         });
          // add button and listenner for oval
         JButton btnOval = new JButton("Oval");
         btnOval.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                canvas.addShape(new DOvalModel());
+                canvas.addShape(new DOvalModel(), true);
             }
         });
         
@@ -260,7 +260,7 @@ public class Whiteboard extends JFrame {
         JButton btnLine = new JButton("Line");
         btnLine.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                canvas.addShape(new DLineModel());
+                canvas.addShape(new DLineModel(), true);
             }
         });
         
@@ -268,7 +268,7 @@ public class Whiteboard extends JFrame {
         JButton btnText = new JButton("Text");
         btnText.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                canvas.addShape(new DTextModel());
+                canvas.addShape(new DTextModel(), true);
             }
         });
         
@@ -387,7 +387,7 @@ public class Whiteboard extends JFrame {
         		
         		for(DShapeModel model : models)
         		{
-        			this.canvas.addShape(model);
+        			this.canvas.addShape(model, false);
         		}
         	}
         	catch(IOException e)
