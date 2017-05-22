@@ -53,7 +53,7 @@ public abstract class DShapeModel {
         return listeners.remove(listener);
     }
 
-    private void notifyChange() {
+    public void notifyChange() {
         for (ModelListener listener : listeners) {
             listener.modelChanged(this);
         }

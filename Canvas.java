@@ -29,6 +29,22 @@ public class Canvas extends JPanel {
             public void mousePressed(MouseEvent e) {
                 selectShape(e.getPoint());
             }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if(selectedShape != null) {
+                    selectedShape.onMouseReleased();
+                }
+            }
+        });
+
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (selectedShape != null) {
+                    selectedShape.onMouseDragged(e.getX(), e.getY());
+                }
+            }
         });
     }
 
@@ -37,6 +53,7 @@ public class Canvas extends JPanel {
         for (DShape shape : shapes) {
             if (shape.containsPoint(point)) {
                 selectedShape = shape;
+                selectedShape.onMousePressed(point);
                 clickOnShape = true;
             }
         }
@@ -49,6 +66,30 @@ public class Canvas extends JPanel {
 
     public DShape getSelectedShape() {
         return selectedShape;
+    }
+    
+    public ArrayList<DShape> getShapes()
+    {
+    	return shapes;
+    }
+    
+    public ArrayList<DShapeModel> getShapeModels()
+    {
+    	ArrayList<DShapeModel> list = new ArrayList<DShapeModel>();
+    	for (DShape shape : shapes)
+    	{
+    		list.add(shape.getModel());
+    	}
+    	return list;
+    }
+
+    public void deleteShape(DShape shape) {
+        shapes.remove(shape);
+        repaint();
+    }
+
+    public void toFront(DShape shape) {
+        System.out.println(shape);
     }
 
     public void addShape(DShapeModel model) {
@@ -78,15 +119,21 @@ public class Canvas extends JPanel {
         else if (model instanceof DLineModel){
             shape = new DLine(model, this);
         }
-        else if (model instanceof DTextModel){
-             String inputT = DText.getText();
-            shape = new DText(model, this,inputT);
+        else if (model instanceof DTextModel ){
+            shape = new DText(model, this,((DTextModel) model).getText());
         }
 
         shapes.add(shape);
         selectedShape = shape;
         System.out.println(shapes.toString());
         repaint();
+    }
+    
+    public void clear()
+    {
+    	shapes.clear();
+    	selectedShape = null;
+    	repaint();
     }
 
     @Override

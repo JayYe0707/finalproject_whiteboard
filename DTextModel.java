@@ -7,11 +7,21 @@ package finalproject_whiteboard;
 
 /**
  *
- * @author renjoe
+ * @author renjie
  */
 public class DTextModel extends DShapeModel{
-    public DTextModel(){
+    String textFromModel = null;
+    
+    public DTextModel(String textFromWhiteBoard){
         super();
-        ;
+        textFromModel = textFromWhiteBoard;
+        
+    }
+    public  void setText(String updatedText){
+        this.textFromModel = updatedText;
+        super.notifyChange();
+    }
+    public  String getText(){
+        return this.textFromModel;
     }
 }

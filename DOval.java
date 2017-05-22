@@ -20,7 +20,7 @@ public class DOval extends DShape{
         Color color = model.getColor();
         Rectangle bounds = model.getBounds();
         g.setColor(color);
-        g.fillOval(bounds.x, bounds.y, bounds.height, bounds.width);
+        g.fillOval(bounds.x, bounds.y, bounds.width, bounds.height);
         super.draw(g, isSelected);
     }
     

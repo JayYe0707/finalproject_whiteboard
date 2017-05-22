@@ -7,7 +7,7 @@ package finalproject_whiteboard;
 
 /**
  *
- * @author renjoe
+ * @author renjie
  */
 public class DLineModel extends DShapeModel{
     public DLineModel(){
