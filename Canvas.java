@@ -89,7 +89,27 @@ public class Canvas extends JPanel {
     }
 
     public void toFront(DShape shape) {
-        System.out.println(shape);
+        ArrayList<DShape> newShapes = new ArrayList<DShape>();
+        for (DShape s : shapes) {
+            if (shape != s) {
+                newShapes.add(s);
+            }
+            newShapes.add(shape);
+        }
+        shapes = newShapes;
+        repaint();
+    }
+
+    public void toBack(DShape shape) {
+        ArrayList<DShape> newShapes = new ArrayList<DShape>();
+        newShapes.add(shape);
+        for (DShape s : shapes) {
+            if (shape != s) {
+                newShapes.add(s);
+            }
+        }
+        shapes = newShapes;
+        repaint();
     }
 
     public void addShape(DShapeModel model) {

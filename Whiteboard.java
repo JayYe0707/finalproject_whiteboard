@@ -85,6 +85,14 @@ public class Whiteboard extends JFrame {
         });
 
         JButton btnBackward = new JButton("Move to Back");
+        btnBackward.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                DShape s = canvas.getSelectedShape();
+                if (s != null) {
+                    canvas.toBack(s);
+                }
+            }
+        });
 
         Box box = Box.createHorizontalBox();
 
