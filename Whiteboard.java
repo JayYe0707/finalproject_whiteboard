@@ -53,10 +53,24 @@ public class Whiteboard extends JFrame {
             }
         });
 
+        JButton btnForward = new JButton("Move to Front");
+        btnForward.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                DShape s = canvas.getSelectedShape();
+                if (s != null) {
+                    canvas.toFront(s);
+                }
+            }
+        });
+
+        JButton btnBackward = new JButton("Move to Back");
+
         Box box = Box.createHorizontalBox();
 
         box.add(btnSetColor);
         box.add(btnDelete);
+        box.add(btnForward);
+        box.add(btnBackward);
 
         return box;
     }

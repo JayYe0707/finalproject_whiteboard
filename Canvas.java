@@ -73,6 +73,10 @@ public class Canvas extends JPanel {
         repaint();
     }
 
+    public void toFront(DShape shape) {
+        System.out.println(shape);
+    }
+
     public void addShape(DShapeModel model) {
         // System.out.println(model);
         DShape shape = null;
