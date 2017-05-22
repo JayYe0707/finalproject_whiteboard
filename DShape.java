@@ -25,6 +25,11 @@ public abstract class DShape implements ModelListener {
     public Rectangle getBounds() {
         return model.getBounds();
     }
+    
+    public DShapeModel getModel()
+    {
+    	return model;
+    }
 
     public Color getColor() {
         return model.getColor();
