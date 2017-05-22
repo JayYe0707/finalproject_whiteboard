@@ -7,10 +7,17 @@ import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -31,6 +38,10 @@ public class Whiteboard extends JFrame {
     private JFileChooser fileChooser;
     private JTable table;
     private TableModel tableModel;
+    private int port;
+    private Server server;
+    private Client client;
+    private Whiteboard board = this;
     
 
     public Whiteboard() {
@@ -295,7 +306,7 @@ public class Whiteboard extends JFrame {
                 textFromWhiteboard = inputText.getText();
                 DShape textShape = canvas.getSelectedShape();
                 if (textShape != null){
-                canvas.addShape(new DTextModel(textFromWhiteboard));
+                canvas.addShape(new DTextModel(textFromWhiteboard), true);
                 }
 
             }
@@ -305,7 +316,7 @@ public class Whiteboard extends JFrame {
                 textFromWhiteboard = inputText.getText();
                 DShape textShape = canvas.getSelectedShape();
                 if (textShape != null){
-                canvas.addShape(new DTextModel(textFromWhiteboard));
+                canvas.addShape(new DTextModel(textFromWhiteboard), true);
                 }
             }
             
@@ -335,6 +346,34 @@ public class Whiteboard extends JFrame {
         		saveImage();
         	}
         });
+        
+        JLabel mode = new JLabel("Normal Mode");
+        
+        JButton serverButton = new JButton("Start Server");
+        serverButton.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e){
+        		mode.setText("Server Mode");
+        		String currentPort = JOptionPane.showInputDialog("Server Port: ", "39587");
+                port = Integer.parseInt(currentPort);
+                server = new Server(board , canvas, port);
+                server.run();
+        	}
+        });
+        
+        
+        JButton clientButton = new JButton("Start Client");
+        clientButton.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e){
+        		mode.setText("Client Mode");
+        		 String connectingPort = JOptionPane.showInputDialog("Connect to server host:port: ", "127.0.0.1:" + port);
+        		 String[] portNumber = connectingPort.split(":");
+        		 client = new Client(board, canvas, portNumber[0].trim(), Integer.parseInt(portNumber[1]));
+                 client.run();
+        	}
+        });
+        
+        
+        
 
 
         Box box = Box.createHorizontalBox();
@@ -352,13 +391,60 @@ public class Whiteboard extends JFrame {
         box3.add(openButton);
         box3.add(saveImageButton);
         
+        Box box4 = Box.createHorizontalBox();
+        box4.add(serverButton);
+        box4.add(clientButton);
+        box4.add(mode);
+        
         Box totalBox = Box.createVerticalBox();
+        totalBox.add(box4);
         totalBox.add(box3);
         totalBox.add(box);
         totalBox.add(box2);
         
 
         return totalBox;
+    }
+    
+    public class Server implements Runnable
+    {
+    	private int port;
+        private Whiteboard whiteboard;
+        private Canvas canvas;
+      
+        public Server(Whiteboard whiteboard, Canvas canvas, int port)
+        {
+            this.whiteboard = whiteboard;
+            this.canvas = canvas;
+            this.port = port;
+        }  
+        
+        public void run()
+        {
+            
+        }
+    }
+    
+    public class Client implements Runnable
+    {
+    	private String host;
+        private int port;
+        private Whiteboard whiteboard;
+        private Canvas canvas;
+        
+        public Client(Whiteboard whiteboard, Canvas canvas, String host, int port)
+        {
+            this.whiteboard = whiteboard;
+            this.canvas = canvas;
+            this.host = host;
+            this.port = port;
+            canvas.clear();
+        } 
+        
+        public void run()
+        {
+        	
+        }
     }
     
     private void save(){
