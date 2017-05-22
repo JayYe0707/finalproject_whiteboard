@@ -17,8 +17,10 @@ public class Canvas extends JPanel {
 
     private ArrayList<DShape> shapes;
     private DShape selectedShape;
+    private Whiteboard board;
 
-    public Canvas() {
+    public Canvas(Whiteboard board) {
+    	this.board = board;
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         setPreferredSize(getMinimumSize());
         setBackground(Color.white);
@@ -60,6 +62,7 @@ public class Canvas extends JPanel {
         if (!clickOnShape) {
             selectedShape = null;
         }
+        board.updateTableSelection(selectedShape);
         System.out.println(selectedShape);
         repaint();
     }
@@ -86,29 +89,53 @@ public class Canvas extends JPanel {
     public void deleteShape(DShape shape) {
         shapes.remove(shape);
         repaint();
+        board.removeShapeFromTable(shape);
     }
 
     public void toFront(DShape shape) {
-        System.out.println(shape);
+        ArrayList<DShape> newShapes = new ArrayList<DShape>();
+        for (DShape s : shapes) {
+            if (shape != s) {
+                newShapes.add(s);
+            }
+            newShapes.add(shape);
+        }
+        board.tableToFront(shape);
+        shapes = newShapes;
+        repaint();
     }
 
-    public void addShape(DShapeModel model) {
+    public void toBack(DShape shape) {
+        ArrayList<DShape> newShapes = new ArrayList<DShape>();
+        newShapes.add(shape);
+        for (DShape s : shapes) {
+            if (shape != s) {
+                newShapes.add(s);
+            }
+        }
+        board.tableToBack(shape);
+        shapes = newShapes;
+        repaint();
+    }
+
+    public void addShape(DShapeModel model, boolean random) {
         // System.out.println(model);
         DShape shape = null;
+        if (random)
+        {
+        	// set bounds
+        	Random rand = new Random();
+        	int w = rand.nextInt(100) + SHAPE_W;
+        	rand = new Random();
+        	int h = rand.nextInt(100) + SHAPE_H;
+        	rand = new Random();
 
-        // set bounds
-        Random rand = new Random();
-        int w = rand.nextInt(100) + SHAPE_W;
-        rand = new Random();
-        int h = rand.nextInt(100) + SHAPE_H;
-        rand = new Random();
+        	int x = rand.nextInt(WIDTH - w) + SHAPE_X;
+        	rand = new Random();
+        	int y = rand.nextInt(HEIGHT - h) + SHAPE_Y;
 
-        int x = rand.nextInt(WIDTH - w) + SHAPE_X;
-        rand = new Random();
-        int y = rand.nextInt(HEIGHT - h) + SHAPE_Y;
-
-        model.setBounds(x, y, w, h);
-
+        	model.setBounds(x, y, w, h);
+        }
         if(model instanceof DRectModel) {
             shape = new DRect(model, this);
         }
@@ -125,6 +152,7 @@ public class Canvas extends JPanel {
 
         shapes.add(shape);
         selectedShape = shape;
+        board.addShapeToTable(shape);
         System.out.println(shapes.toString());
         repaint();
     }
@@ -133,6 +161,7 @@ public class Canvas extends JPanel {
     {
     	shapes.clear();
     	selectedShape = null;
+        board.clearTable();
     	repaint();
     }
 

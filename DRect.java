@@ -17,4 +17,9 @@ public class DRect extends DShape {
         // System.out.println("Draw DRect: " + bounds.x + bounds.y + bounds.width + bounds.height);
         super.draw(g, isSelected);
     }
+    
+    public DRectModel getModel()
+    {
+    	return (DRectModel) model;
+    }
 }

@@ -24,4 +24,9 @@ public class DOval extends DShape{
         super.draw(g, isSelected);
     }
     
+    public DOvalModel getModel()
+    {
+    	return (DOvalModel) model;
+    }
+    
 }

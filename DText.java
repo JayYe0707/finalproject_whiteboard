@@ -35,11 +35,9 @@ public class DText extends DShape{
         m.setText(text);
     }
 
-//        public static String getText(){
-//         return DText.text;
-//    }
-//        public static void setText(String newText){
-//             DText.text = newText;
-//             
-//        }
+        
+    public DTextModel getModel()
+    {
+    	return (DTextModel) model;
+    }
 }
